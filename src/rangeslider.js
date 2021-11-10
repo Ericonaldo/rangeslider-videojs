@@ -707,7 +707,7 @@ class rangeSlider_ extends Plugin{
 
         //When the DOM and the video media is loaded
         function initialVideoFinished(event) {
-            // console.log("011", this.rangeSlider)
+            // console.log("011", this.rangeslider)
             var plugin = player.rangeslider;
             console.log("02", player, player.rangeslider)
             //All components will be initialize after they have been loaded by videojs
@@ -1100,63 +1100,63 @@ class RangeSlider {
 
     //Lock the Slider bar and it will not be possible to change the arrow positions
     videojsPlayer.prototype.lockSlider = function() {
-        return this.rangeSlider.lock();
+        return this.rangeslider.lock();
     };
 
     //Unlock the Slider bar and it will be possible to change the arrow positions
     videojsPlayer.prototype.unlockSlider = function() {
-        return this.rangeSlider.unlock();
+        return this.rangeslider.unlock();
     };
 
     //Show the Slider Bar Component
     videojsPlayer.prototype.showSlider = function() {
-        return this.rangeSlider.show();
+        return this.rangeslider.show();
     };
 
     //Hide the Slider Bar Component
     videojsPlayer.prototype.hideSlider = function() {
-        return this.rangeSlider.hide();
+        return this.rangeslider.hide();
     };
 
     //Show the Panel with the seconds of the selection
     videojsPlayer.prototype.showSliderPanel = function() {
-        return this.rangeSlider.showPanel();
+        return this.rangeslider.showPanel();
     };
 
     //Hide the Panel with the seconds of the selection
     videojsPlayer.prototype.hideSliderPanel = function() {
-        return this.rangeSlider.hidePanel();
+        return this.rangeslider.hidePanel();
     };
 
 
     //Show the control Time to edit the position of the arrows
     videojsPlayer.prototype.showControlTime = function() {
-        return this.rangeSlider.showcontrolTime();
+        return this.rangeslider.showcontrolTime();
     };
 
     //Hide the control Time to edit the position of the arrows
     videojsPlayer.prototype.hideControlTime = function() {
-        return this.rangeSlider.hidecontrolTime();
+        return this.rangeslider.hidecontrolTime();
     };
 
     //Set a Value in second for both arrows
     videojsPlayer.prototype.setValueSlider = function(start, end) {
-        return this.rangeSlider.setValues(start, end);
+        return this.rangeslider.setValues(start, end);
     };
 
     //The video will be played in a selected section
     videojsPlayer.prototype.playBetween = function(start, end) {
-        return this.rangeSlider.playBetween(start, end);
+        return this.rangeslider.playBetween(start, end);
     };
 
     //The video will loop between to values
     videojsPlayer.prototype.loopBetween = function(start, end) {
-        return this.rangeSlider.loop(start, end);
+        return this.rangeslider.loop(start, end);
     };
 
     //Set a Value in second for the arrows
     videojsPlayer.prototype.getValueSlider = function() {
-        return this.rangeSlider.getValues();
+        return this.rangeslider.getValues();
     };
 })();
 
