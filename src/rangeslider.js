@@ -202,7 +202,7 @@ class TimePanelLeft extends Component{
     createEl() {
         return super.createEl('div', {
             className: 'vjs-timepanel-left-RS',
-            innerHTML: '<span class="vjs-time-text">00:00</span>'
+            innerHTML: '<span class="vjs-time-text" id="Start">00:00</span>'
         });
     };
 }
@@ -228,7 +228,7 @@ class TimePanelRight extends Component {
     createEl() {
         return super.createEl('div', {
             className: 'vjs-timepanel-right-RS',
-            innerHTML: '<span class="vjs-time-text">00:00</span>'
+            innerHTML: '<span class="vjs-time-text" id="End">00:00</span>'
         });
     }
 }
@@ -314,7 +314,7 @@ class SeekRSBar extends Component {
     
         //Fix a problem with the presition in the display time
         var ctd = this.player_.controlBar.currentTimeDisplay;
-        ctd.contentEl_.innerHTML = '<span class="vjs-control-text">' + ctd.localize('Current Time') + '</span>' + _vjs4.formatTime(this.rs._seconds(left), this.player_.duration());
+        // ctd.contentEl_.innerHTML = '<span class="vjs-control-text">' + ctd.localize('Current Time') + '</span>' + _vjs4.formatTime(this.rs._seconds(left), this.player_.duration());
     
         // Trigger slider change
         if (this.rs.left.pressed || this.rs.right.pressed) {
@@ -328,7 +328,7 @@ class SeekRSBar extends Component {
         index = index || 0;
     
         // Position shouldn't change when handle is locked
-        console.log("123", this.player_, this.player_.options, Object.keys(this.rs), this.rs.options)
+        // console.log("123", this.player_, this.player_.options, Object.keys(this.rs), this.rs.options)
         if (this.rs.options.locked)
             return false;
     
@@ -472,6 +472,7 @@ class SelectionBar extends Component {
         super(player, options);
 
         this.on('mouseup', this.onMouseUp);
+        _vjs4.on(document, "mouseup", videojs.bind(this, this.onMouseUp));
         this.fired = false;
     }
 
@@ -485,16 +486,22 @@ class SelectionBar extends Component {
         });
     }
     
-    onMouseUp() {
+    onMouseUp(event) {
         var start = this.rs.left.el_.style.left.replace("%", ""),
-                end = this.rs.right.el_.style.left.replace("%", ""),
-                duration = this.player_.duration(),
-                precision = this.rs.updatePrecision,
-                segStart = _vjs4.round(start * duration / 100, precision),
-                segEnd = _vjs4.round(end * duration / 100, precision);
-        this.player_.currentTime(segStart);
-        this.player_.play();
-        this.rs.bar.activatePlay(segStart, segEnd);
+            end = this.rs.right.el_.style.left.replace("%", ""),
+            duration = this.player_.duration(),
+            precision = this.rs.updatePrecision,
+            segStart = _vjs4.round(start * duration / 100, precision),
+            segEnd = _vjs4.round(end * duration / 100, precision);
+        
+        let current = this.player_.currentTime()
+        // console.log("006", current, segStart, segEnd, ((segStart >= current) || (segEnd <= current)))
+        if ((segStart >= (current-0.5)) || (segEnd <= (current+0.5))){
+            // console.log("007", current, segStart, segEnd)
+            this.player_.currentTime(segStart);
+            this.player_.play();
+            this.rs.bar.activatePlay(segStart, segEnd);
+        }
     }
     
     updateLeft(left) {
@@ -563,6 +570,7 @@ class SelectionBar extends Component {
         var player = this.player;
     
         if (player && this.looping) {
+            // console.log("004!", this.looping, this.timeStart, this.timeEnd)
             var current_time = player.currentTime();
     
             if (current_time < this.timeStart || this.timeEnd > 0 && this.timeEnd < current_time) {
@@ -699,17 +707,17 @@ class rangeSlider_ extends Plugin{
         super(player, options);
         var player = player;
         
-        console.log("=== rangeSlider_ constructor ===")
+        // console.log("=== rangeSlider_ constructor ===")
         
-        console.log("00", player, player.rangeSlider)
+        // console.log("00", player, player.rangeSlider)
         player.rangeslider = new RangeSlider(player, options);
-        console.log("01", player, player.rangeslider.options)
+        // console.log("01", player, player.rangeslider.options)
 
         //When the DOM and the video media is loaded
         function initialVideoFinished(event) {
             // console.log("011", this.rangeslider)
             var plugin = player.rangeslider;
-            console.log("02", player, player.rangeslider)
+            // console.log("02", player, player.rangeslider)
             //All components will be initialize after they have been loaded by videojs
             for (var index in plugin.components) {
                 // console.log("03", index, plugin.components[index])
@@ -870,7 +878,7 @@ class RangeSlider {
     }
 
     setValue(index, seconds, writeControlTime) {
-        console.log("set value")
+        // console.log("set value")
         //index = 0 for the left Arrow and 1 for the right Arrow. Value in seconds
         writeControlTime = typeof writeControlTime != 'undefined' ? writeControlTime : true;
 
