@@ -725,8 +725,8 @@ class rangeSlider_ extends Plugin{
             if (plugin.options.panel === false)
                 plugin.hidePanel(); //Hide the second Panel
 
-            if (plugin.options.controlTime === false)
-                plugin.hidecontrolTime(); //Hide the control time panel
+            // if (plugin.options.controlTime === false)
+            //     plugin.hidecontrolTime(); //Hide the control time panel
 
             plugin._reset();
             player.trigger('loadedRangeSlider'); //Let know if the Range Slider DOM is ready
@@ -740,7 +740,6 @@ class rangeSlider_ extends Plugin{
 class RangeSlider {
 
     constructor(_player, options = {}) { 
-        console.log("rangeSlider constructor",)
         var player = _player || this;
         this.player = player;
 
@@ -760,6 +759,15 @@ class RangeSlider {
         this.options = options;
 
         this.init();
+
+        if (options.hidden)
+            this.hide(); //Hide the Range Slider
+
+        if (options.locked)
+            this.lock(); //Lock the Range Slider
+
+        if (options.panel === false)
+            this.hidePanel(); //Hide the second Panel
 
     }
   
